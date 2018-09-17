@@ -10,11 +10,18 @@ function getUserId(context) {
     } = jwt.verify(token, APP_SECRET)
     return userId
   }
-
   throw new Error('Not authenticated')
+}
+
+function extend(obj, src) {
+  Object.keys(src).forEach(key => {
+    obj[key] = src[key];
+  })
+  return obj;
 }
 
 module.exports = {
   APP_SECRET,
   getUserId,
+  extend,
 }

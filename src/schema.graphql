@@ -1,11 +1,14 @@
+# import Hero, Project from "./generated/prisma.graphql"
 
 type Query {
   info: String!
 }
 
 type Mutation {
-  signup(email: String!, password: String!, name: String!): AuthPayload
+  signup(email: String!, password: String!, githubUserId: String! name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
+  createHero(name: String!, heroClass: String! projectId: ID! user: String!): Hero!
+  createProject(repoName: String!, repoOwner: String!): Project!
 }
 
 type AuthPayload {
@@ -21,12 +24,5 @@ type User {
   id: ID!
   name: String!
   email: String!
-  heros: [Hero!]!
 }
 
-type Hero {
-  id: ID!
-  name: String!
-  heroClass: String!
-  exp: Int
-}

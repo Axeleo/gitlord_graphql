@@ -1,0 +1,21 @@
+async function craeteHero(params) {
+  const exp = await findExp()
+  Hero.create(exp)
+}
+
+async function findExp() {
+  let result = {}
+  try {
+    result = await requestGithub()
+    .then(data => {
+      result = data
+      return result
+    })
+    .catch(err => {
+      throw err
+    })
+  } catch {
+    console.log(error)
+  }
+  return result
+}

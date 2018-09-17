@@ -1,5 +1,13 @@
 # source: https://us1.prisma.sh/axel-debenham-lendon/graphql-server-test/dev
-# timestamp: Sat Sep 15 2018 20:48:32 GMT+1000 (Australian Eastern Standard Time)
+# timestamp: Sun Sep 16 2018 17:27:09 GMT+1000 (Australian Eastern Standard Time)
+
+type AggregateHero {
+  count: Int!
+}
+
+type AggregateProject {
+  count: Int!
+}
 
 type AggregateUser {
   count: Int!
@@ -10,6 +18,348 @@ type BatchPayload {
   count: Long!
 }
 
+type Hero implements Node {
+  id: ID!
+  name: String!
+  heroClass: String!
+  exp: Int
+  owner(where: UserWhereInput): User!
+  project(where: ProjectWhereInput): Project!
+}
+
+"""A connection to a list of items."""
+type HeroConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [HeroEdge]!
+  aggregate: AggregateHero!
+}
+
+input HeroCreateInput {
+  name: String!
+  heroClass: String!
+  exp: Int
+  owner: UserCreateOneWithoutHerosInput!
+  project: ProjectCreateOneWithoutHerosInput!
+}
+
+input HeroCreateManyWithoutOwnerInput {
+  create: [HeroCreateWithoutOwnerInput!]
+  connect: [HeroWhereUniqueInput!]
+}
+
+input HeroCreateManyWithoutProjectInput {
+  create: [HeroCreateWithoutProjectInput!]
+  connect: [HeroWhereUniqueInput!]
+}
+
+input HeroCreateWithoutOwnerInput {
+  name: String!
+  heroClass: String!
+  exp: Int
+  project: ProjectCreateOneWithoutHerosInput!
+}
+
+input HeroCreateWithoutProjectInput {
+  name: String!
+  heroClass: String!
+  exp: Int
+  owner: UserCreateOneWithoutHerosInput!
+}
+
+"""An edge in a connection."""
+type HeroEdge {
+  """The item at the end of the edge."""
+  node: Hero!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum HeroOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  heroClass_ASC
+  heroClass_DESC
+  exp_ASC
+  exp_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type HeroPreviousValues {
+  id: ID!
+  name: String!
+  heroClass: String!
+  exp: Int
+}
+
+type HeroSubscriptionPayload {
+  mutation: MutationType!
+  node: Hero
+  updatedFields: [String!]
+  previousValues: HeroPreviousValues
+}
+
+input HeroSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [HeroSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [HeroSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [HeroSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: HeroWhereInput
+}
+
+input HeroUpdateInput {
+  name: String
+  heroClass: String
+  exp: Int
+  owner: UserUpdateOneRequiredWithoutHerosInput
+  project: ProjectUpdateOneRequiredWithoutHerosInput
+}
+
+input HeroUpdateManyWithoutOwnerInput {
+  create: [HeroCreateWithoutOwnerInput!]
+  connect: [HeroWhereUniqueInput!]
+  disconnect: [HeroWhereUniqueInput!]
+  delete: [HeroWhereUniqueInput!]
+  update: [HeroUpdateWithWhereUniqueWithoutOwnerInput!]
+  upsert: [HeroUpsertWithWhereUniqueWithoutOwnerInput!]
+}
+
+input HeroUpdateManyWithoutProjectInput {
+  create: [HeroCreateWithoutProjectInput!]
+  connect: [HeroWhereUniqueInput!]
+  disconnect: [HeroWhereUniqueInput!]
+  delete: [HeroWhereUniqueInput!]
+  update: [HeroUpdateWithWhereUniqueWithoutProjectInput!]
+  upsert: [HeroUpsertWithWhereUniqueWithoutProjectInput!]
+}
+
+input HeroUpdateWithoutOwnerDataInput {
+  name: String
+  heroClass: String
+  exp: Int
+  project: ProjectUpdateOneRequiredWithoutHerosInput
+}
+
+input HeroUpdateWithoutProjectDataInput {
+  name: String
+  heroClass: String
+  exp: Int
+  owner: UserUpdateOneRequiredWithoutHerosInput
+}
+
+input HeroUpdateWithWhereUniqueWithoutOwnerInput {
+  where: HeroWhereUniqueInput!
+  data: HeroUpdateWithoutOwnerDataInput!
+}
+
+input HeroUpdateWithWhereUniqueWithoutProjectInput {
+  where: HeroWhereUniqueInput!
+  data: HeroUpdateWithoutProjectDataInput!
+}
+
+input HeroUpsertWithWhereUniqueWithoutOwnerInput {
+  where: HeroWhereUniqueInput!
+  update: HeroUpdateWithoutOwnerDataInput!
+  create: HeroCreateWithoutOwnerInput!
+}
+
+input HeroUpsertWithWhereUniqueWithoutProjectInput {
+  where: HeroWhereUniqueInput!
+  update: HeroUpdateWithoutProjectDataInput!
+  create: HeroCreateWithoutProjectInput!
+}
+
+input HeroWhereInput {
+  """Logical AND on all given filters."""
+  AND: [HeroWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [HeroWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [HeroWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  heroClass: String
+
+  """All values that are not equal to given value."""
+  heroClass_not: String
+
+  """All values that are contained in given list."""
+  heroClass_in: [String!]
+
+  """All values that are not contained in given list."""
+  heroClass_not_in: [String!]
+
+  """All values less than the given value."""
+  heroClass_lt: String
+
+  """All values less than or equal the given value."""
+  heroClass_lte: String
+
+  """All values greater than the given value."""
+  heroClass_gt: String
+
+  """All values greater than or equal the given value."""
+  heroClass_gte: String
+
+  """All values containing the given string."""
+  heroClass_contains: String
+
+  """All values not containing the given string."""
+  heroClass_not_contains: String
+
+  """All values starting with the given string."""
+  heroClass_starts_with: String
+
+  """All values not starting with the given string."""
+  heroClass_not_starts_with: String
+
+  """All values ending with the given string."""
+  heroClass_ends_with: String
+
+  """All values not ending with the given string."""
+  heroClass_not_ends_with: String
+  exp: Int
+
+  """All values that are not equal to given value."""
+  exp_not: Int
+
+  """All values that are contained in given list."""
+  exp_in: [Int!]
+
+  """All values that are not contained in given list."""
+  exp_not_in: [Int!]
+
+  """All values less than the given value."""
+  exp_lt: Int
+
+  """All values less than or equal the given value."""
+  exp_lte: Int
+
+  """All values greater than the given value."""
+  exp_gt: Int
+
+  """All values greater than or equal the given value."""
+  exp_gte: Int
+  owner: UserWhereInput
+  project: ProjectWhereInput
+}
+
+input HeroWhereUniqueInput {
+  id: ID
+}
+
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -18,11 +368,23 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  createHero(data: HeroCreateInput!): Hero!
+  createProject(data: ProjectCreateInput!): Project!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateHero(data: HeroUpdateInput!, where: HeroWhereUniqueInput!): Hero
+  updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteHero(where: HeroWhereUniqueInput!): Hero
+  deleteProject(where: ProjectWhereUniqueInput!): Project
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertHero(where: HeroWhereUniqueInput!, create: HeroCreateInput!, update: HeroUpdateInput!): Hero!
+  upsertProject(where: ProjectWhereUniqueInput!, create: ProjectCreateInput!, update: ProjectUpdateInput!): Project!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyHeroes(data: HeroUpdateInput!, where: HeroWhereInput): BatchPayload!
+  updateManyProjects(data: ProjectUpdateInput!, where: ProjectWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyHeroes(where: HeroWhereInput): BatchPayload!
+  deleteManyProjects(where: ProjectWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -52,10 +414,277 @@ type PageInfo {
   endCursor: String
 }
 
+type Project implements Node {
+  id: ID!
+  repoName: String!
+  repoOwner: String!
+  heros(where: HeroWhereInput, orderBy: HeroOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Hero!]
+}
+
+"""A connection to a list of items."""
+type ProjectConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ProjectEdge]!
+  aggregate: AggregateProject!
+}
+
+input ProjectCreateInput {
+  repoName: String!
+  repoOwner: String!
+  heros: HeroCreateManyWithoutProjectInput
+}
+
+input ProjectCreateOneWithoutHerosInput {
+  create: ProjectCreateWithoutHerosInput
+  connect: ProjectWhereUniqueInput
+}
+
+input ProjectCreateWithoutHerosInput {
+  repoName: String!
+  repoOwner: String!
+}
+
+"""An edge in a connection."""
+type ProjectEdge {
+  """The item at the end of the edge."""
+  node: Project!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ProjectOrderByInput {
+  id_ASC
+  id_DESC
+  repoName_ASC
+  repoName_DESC
+  repoOwner_ASC
+  repoOwner_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ProjectPreviousValues {
+  id: ID!
+  repoName: String!
+  repoOwner: String!
+}
+
+type ProjectSubscriptionPayload {
+  mutation: MutationType!
+  node: Project
+  updatedFields: [String!]
+  previousValues: ProjectPreviousValues
+}
+
+input ProjectSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ProjectSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ProjectSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ProjectSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ProjectWhereInput
+}
+
+input ProjectUpdateInput {
+  repoName: String
+  repoOwner: String
+  heros: HeroUpdateManyWithoutProjectInput
+}
+
+input ProjectUpdateOneRequiredWithoutHerosInput {
+  create: ProjectCreateWithoutHerosInput
+  connect: ProjectWhereUniqueInput
+  update: ProjectUpdateWithoutHerosDataInput
+  upsert: ProjectUpsertWithoutHerosInput
+}
+
+input ProjectUpdateWithoutHerosDataInput {
+  repoName: String
+  repoOwner: String
+}
+
+input ProjectUpsertWithoutHerosInput {
+  update: ProjectUpdateWithoutHerosDataInput!
+  create: ProjectCreateWithoutHerosInput!
+}
+
+input ProjectWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ProjectWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ProjectWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ProjectWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  repoName: String
+
+  """All values that are not equal to given value."""
+  repoName_not: String
+
+  """All values that are contained in given list."""
+  repoName_in: [String!]
+
+  """All values that are not contained in given list."""
+  repoName_not_in: [String!]
+
+  """All values less than the given value."""
+  repoName_lt: String
+
+  """All values less than or equal the given value."""
+  repoName_lte: String
+
+  """All values greater than the given value."""
+  repoName_gt: String
+
+  """All values greater than or equal the given value."""
+  repoName_gte: String
+
+  """All values containing the given string."""
+  repoName_contains: String
+
+  """All values not containing the given string."""
+  repoName_not_contains: String
+
+  """All values starting with the given string."""
+  repoName_starts_with: String
+
+  """All values not starting with the given string."""
+  repoName_not_starts_with: String
+
+  """All values ending with the given string."""
+  repoName_ends_with: String
+
+  """All values not ending with the given string."""
+  repoName_not_ends_with: String
+  repoOwner: String
+
+  """All values that are not equal to given value."""
+  repoOwner_not: String
+
+  """All values that are contained in given list."""
+  repoOwner_in: [String!]
+
+  """All values that are not contained in given list."""
+  repoOwner_not_in: [String!]
+
+  """All values less than the given value."""
+  repoOwner_lt: String
+
+  """All values less than or equal the given value."""
+  repoOwner_lte: String
+
+  """All values greater than the given value."""
+  repoOwner_gt: String
+
+  """All values greater than or equal the given value."""
+  repoOwner_gte: String
+
+  """All values containing the given string."""
+  repoOwner_contains: String
+
+  """All values not containing the given string."""
+  repoOwner_not_contains: String
+
+  """All values starting with the given string."""
+  repoOwner_starts_with: String
+
+  """All values not starting with the given string."""
+  repoOwner_not_starts_with: String
+
+  """All values ending with the given string."""
+  repoOwner_ends_with: String
+
+  """All values not ending with the given string."""
+  repoOwner_not_ends_with: String
+  heros_every: HeroWhereInput
+  heros_some: HeroWhereInput
+  heros_none: HeroWhereInput
+}
+
+input ProjectWhereUniqueInput {
+  id: ID
+}
+
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  heroes(where: HeroWhereInput, orderBy: HeroOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Hero]!
+  projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
   user(where: UserWhereUniqueInput!): User
+  hero(where: HeroWhereUniqueInput!): Hero
+  project(where: ProjectWhereUniqueInput!): Project
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  heroesConnection(where: HeroWhereInput, orderBy: HeroOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HeroConnection!
+  projectsConnection(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProjectConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -66,13 +695,17 @@ type Query {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  hero(where: HeroSubscriptionWhereInput): HeroSubscriptionPayload
+  project(where: ProjectSubscriptionWhereInput): ProjectSubscriptionPayload
 }
 
 type User implements Node {
   id: ID!
   name: String!
+  githubUserId: String!
   email: String!
   password: String!
+  heros(where: HeroWhereInput, orderBy: HeroOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Hero!]
 }
 
 """A connection to a list of items."""
@@ -87,6 +720,20 @@ type UserConnection {
 
 input UserCreateInput {
   name: String!
+  githubUserId: String!
+  email: String!
+  password: String!
+  heros: HeroCreateManyWithoutOwnerInput
+}
+
+input UserCreateOneWithoutHerosInput {
+  create: UserCreateWithoutHerosInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutHerosInput {
+  name: String!
+  githubUserId: String!
   email: String!
   password: String!
 }
@@ -105,6 +752,8 @@ enum UserOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  githubUserId_ASC
+  githubUserId_DESC
   email_ASC
   email_DESC
   password_ASC
@@ -118,6 +767,7 @@ enum UserOrderByInput {
 type UserPreviousValues {
   id: ID!
   name: String!
+  githubUserId: String!
   email: String!
   password: String!
 }
@@ -163,8 +813,29 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   name: String
+  githubUserId: String
   email: String
   password: String
+  heros: HeroUpdateManyWithoutOwnerInput
+}
+
+input UserUpdateOneRequiredWithoutHerosInput {
+  create: UserCreateWithoutHerosInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutHerosDataInput
+  upsert: UserUpsertWithoutHerosInput
+}
+
+input UserUpdateWithoutHerosDataInput {
+  name: String
+  githubUserId: String
+  email: String
+  password: String
+}
+
+input UserUpsertWithoutHerosInput {
+  update: UserUpdateWithoutHerosDataInput!
+  create: UserCreateWithoutHerosInput!
 }
 
 input UserWhereInput {
@@ -256,6 +927,46 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  githubUserId: String
+
+  """All values that are not equal to given value."""
+  githubUserId_not: String
+
+  """All values that are contained in given list."""
+  githubUserId_in: [String!]
+
+  """All values that are not contained in given list."""
+  githubUserId_not_in: [String!]
+
+  """All values less than the given value."""
+  githubUserId_lt: String
+
+  """All values less than or equal the given value."""
+  githubUserId_lte: String
+
+  """All values greater than the given value."""
+  githubUserId_gt: String
+
+  """All values greater than or equal the given value."""
+  githubUserId_gte: String
+
+  """All values containing the given string."""
+  githubUserId_contains: String
+
+  """All values not containing the given string."""
+  githubUserId_not_contains: String
+
+  """All values starting with the given string."""
+  githubUserId_starts_with: String
+
+  """All values not starting with the given string."""
+  githubUserId_not_starts_with: String
+
+  """All values ending with the given string."""
+  githubUserId_ends_with: String
+
+  """All values not ending with the given string."""
+  githubUserId_not_ends_with: String
   email: String
 
   """All values that are not equal to given value."""
@@ -336,9 +1047,13 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
+  heros_every: HeroWhereInput
+  heros_some: HeroWhereInput
+  heros_none: HeroWhereInput
 }
 
 input UserWhereUniqueInput {
   id: ID
+  githubUserId: String
   email: String
 }

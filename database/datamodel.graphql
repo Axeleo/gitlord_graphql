@@ -2,6 +2,25 @@
 type User {
   id: ID! @unique
   name: String!
+  githubUserId: String! @unique
   email: String! @unique
   password: String!
+  heros: [Hero!]!
 }
+
+type Hero {
+  id: ID! @unique
+  name: String!
+  heroClass: String!
+  exp: Int
+  owner: User!
+  project: Project!
+}
+
+type Project {
+  id: ID! @unique
+  repoName: String!
+  repoOwner: String!
+  heros: [Hero!]!
+}
+
