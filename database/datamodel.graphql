@@ -1,8 +1,7 @@
 
 type User {
   id: ID! @unique
-  name: String!
-  githubUserId: String! @unique
+  githubUsername: String! @unique
   email: String! @unique
   password: String!
   heros: [Hero!]!

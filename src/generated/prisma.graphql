@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/axel-debenham-lendon/graphql-server-test/dev
-# timestamp: Sun Sep 16 2018 17:27:09 GMT+1000 (Australian Eastern Standard Time)
+# timestamp: Tue Sep 18 2018 17:52:18 GMT+1000 (Australian Eastern Standard Time)
 
 type AggregateHero {
   count: Int!
@@ -701,8 +701,7 @@ type Subscription {
 
 type User implements Node {
   id: ID!
-  name: String!
-  githubUserId: String!
+  githubUsername: String!
   email: String!
   password: String!
   heros(where: HeroWhereInput, orderBy: HeroOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Hero!]
@@ -719,8 +718,7 @@ type UserConnection {
 }
 
 input UserCreateInput {
-  name: String!
-  githubUserId: String!
+  githubUsername: String!
   email: String!
   password: String!
   heros: HeroCreateManyWithoutOwnerInput
@@ -732,8 +730,7 @@ input UserCreateOneWithoutHerosInput {
 }
 
 input UserCreateWithoutHerosInput {
-  name: String!
-  githubUserId: String!
+  githubUsername: String!
   email: String!
   password: String!
 }
@@ -750,10 +747,8 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
-  githubUserId_ASC
-  githubUserId_DESC
+  githubUsername_ASC
+  githubUsername_DESC
   email_ASC
   email_DESC
   password_ASC
@@ -766,8 +761,7 @@ enum UserOrderByInput {
 
 type UserPreviousValues {
   id: ID!
-  name: String!
-  githubUserId: String!
+  githubUsername: String!
   email: String!
   password: String!
 }
@@ -812,8 +806,7 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateInput {
-  name: String
-  githubUserId: String
+  githubUsername: String
   email: String
   password: String
   heros: HeroUpdateManyWithoutOwnerInput
@@ -827,8 +820,7 @@ input UserUpdateOneRequiredWithoutHerosInput {
 }
 
 input UserUpdateWithoutHerosDataInput {
-  name: String
-  githubUserId: String
+  githubUsername: String
   email: String
   password: String
 }
@@ -887,86 +879,46 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  name: String
+  githubUsername: String
 
   """All values that are not equal to given value."""
-  name_not: String
+  githubUsername_not: String
 
   """All values that are contained in given list."""
-  name_in: [String!]
+  githubUsername_in: [String!]
 
   """All values that are not contained in given list."""
-  name_not_in: [String!]
+  githubUsername_not_in: [String!]
 
   """All values less than the given value."""
-  name_lt: String
+  githubUsername_lt: String
 
   """All values less than or equal the given value."""
-  name_lte: String
+  githubUsername_lte: String
 
   """All values greater than the given value."""
-  name_gt: String
+  githubUsername_gt: String
 
   """All values greater than or equal the given value."""
-  name_gte: String
+  githubUsername_gte: String
 
   """All values containing the given string."""
-  name_contains: String
+  githubUsername_contains: String
 
   """All values not containing the given string."""
-  name_not_contains: String
+  githubUsername_not_contains: String
 
   """All values starting with the given string."""
-  name_starts_with: String
+  githubUsername_starts_with: String
 
   """All values not starting with the given string."""
-  name_not_starts_with: String
+  githubUsername_not_starts_with: String
 
   """All values ending with the given string."""
-  name_ends_with: String
+  githubUsername_ends_with: String
 
   """All values not ending with the given string."""
-  name_not_ends_with: String
-  githubUserId: String
-
-  """All values that are not equal to given value."""
-  githubUserId_not: String
-
-  """All values that are contained in given list."""
-  githubUserId_in: [String!]
-
-  """All values that are not contained in given list."""
-  githubUserId_not_in: [String!]
-
-  """All values less than the given value."""
-  githubUserId_lt: String
-
-  """All values less than or equal the given value."""
-  githubUserId_lte: String
-
-  """All values greater than the given value."""
-  githubUserId_gt: String
-
-  """All values greater than or equal the given value."""
-  githubUserId_gte: String
-
-  """All values containing the given string."""
-  githubUserId_contains: String
-
-  """All values not containing the given string."""
-  githubUserId_not_contains: String
-
-  """All values starting with the given string."""
-  githubUserId_starts_with: String
-
-  """All values not starting with the given string."""
-  githubUserId_not_starts_with: String
-
-  """All values ending with the given string."""
-  githubUserId_ends_with: String
-
-  """All values not ending with the given string."""
-  githubUserId_not_ends_with: String
+  githubUsername_not_ends_with: String
   email: String
 
   """All values that are not equal to given value."""
@@ -1054,6 +1006,6 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
-  githubUserId: String
+  githubUsername: String
   email: String
 }
